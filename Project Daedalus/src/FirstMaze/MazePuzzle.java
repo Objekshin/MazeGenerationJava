@@ -8,8 +8,9 @@ import java.util.Arrays;
  * MazePuzzle will be the class that contains the 2D array that is the maze puzzle.
  * @author asus
  *
+ * @version 0.1
  */
-public class MazePuzzle
+public class MazePuzzle 
 {
 
 
@@ -154,8 +155,23 @@ public class MazePuzzle
 				boolean solution = createPathMarkTwo(newPuzzle, newPos);
 
 			} else {
+				
+				//Make a check for red paths method, check for exceptions.				
+				
+				Position newPos = getNewPos(currentPosition, direction%4);
+				MazePuzzle newPuzzle = new MazePuzzle(puzzle, newPos);
+				
+				System.out.println("direct: "+ direction%4);
+				System.out.println("position: "+currentPosition.getRow() + "," +currentPosition.getColumn() );
+				System.out.println("nposition: "+newPos.getRow() + "," +newPos.getColumn() );
+				
+				newPuzzle.setPositionsAsWHITE(newPuzzle, currentPosition, newPos, direction%4);
+				
+				boolean solution = createPathMarkTwo(newPuzzle, newPos);
+				//This is where you clear red paths
+				
 				System.out.println("BOOM WE GOT HERE");
-				return false;
+				//return false;
 			} 
 			//[Error 1, fix here]
 			System.out.println("RIP");
@@ -213,9 +229,28 @@ public class MazePuzzle
 		
 	}
 
-	private void setPositionsAsWHITE(MazePuzzle x, Position newPos, int direction)
+	private void setPositionsAsWHITE(MazePuzzle x, Position currentPosition, Position newPos, int direction)
 	{
-		x.getMaze()[newPos.getRow()][newPos.getColumn()] = 3;
+		if (direction == 1)
+		{
+			x.getMaze()[currentPosition.getRow()][currentPosition.getColumn()] = 3;
+			x.getMaze()[currentPosition.getRow()-1][currentPosition.getColumn()] = 3;
+			x.getMaze()[newPos.getRow()][newPos.getColumn()] = 3;
+		} else if (direction == 2)
+		{
+			x.getMaze()[currentPosition.getRow()][currentPosition.getColumn()-1] = 3;
+			x.getMaze()[currentPosition.getRow()][currentPosition.getColumn()] = 3;
+			x.getMaze()[newPos.getRow()][newPos.getColumn()] = 3;
+		} else if (direction == 3)
+		{
+			x.getMaze()[currentPosition.getRow()][currentPosition.getColumn()] = 3;
+			x.getMaze()[currentPosition.getRow()+1][currentPosition.getColumn()] = 3;
+			x.getMaze()[newPos.getRow()][newPos.getColumn()] = 3;
+		} else {
+			x.getMaze()[currentPosition.getRow()][currentPosition.getColumn()] = 3;
+			x.getMaze()[currentPosition.getRow()][currentPosition.getColumn()+1] = 3;
+			x.getMaze()[newPos.getRow()][newPos.getColumn()] = 3;
+		}
 	}
 
 	private Position getNewPos(Position CurrentPosition, int direct) //Gets the new modified position According to the direction.
