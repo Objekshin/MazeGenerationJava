@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /**
  * MazePuzzle will be the class that contains the 2D array that is the maze puzzle.
- * @author asus
+ * @author Objekshin
  *
  * @version 0.1
  */
